@@ -41,11 +41,11 @@ public:
 
     void SetCurrentImage(const cv::Mat& im_original, const cv::Mat& im_processed);
 
-    void DrawCurrentFrame(Frame& frame, const bool use_original_image = true);
+    void DrawCurrentFrame(dataset::Frame& frame, const bool use_original_image = true);
 
-    void DrawFrame(Frame& frame, std::string name);
+    void DrawFrame(dataset::Frame& frame, std::string name);
 
-    void DrawRegularizationGraph(Frame& frame, RegularizationGraph& regularization_graph,
+    void DrawRegularizationGraph(dataset::Frame& frame, RegularizationGraph& regularization_graph,
                                  const bool use_original_image = true);
 
     void DrawOpticalFlow(TemporalBuffer& temporal_buffer);

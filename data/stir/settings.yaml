@@ -1,0 +1,44 @@
+%YAML:1.0
+
+# Camera model
+Camera.model: "PinHole"
+
+# Camera calibration and distortion parameters
+Camera.fx: 1020.359863
+Camera.fy: 1020.359924
+Camera.cx: 607.411194
+Camera.cy: 515.951965
+
+Camera.radiansPerPixel: 0.002
+
+# For stereo evaluation
+Stereo.bf: 4298.58
+
+Masking.filterFile: "./data/stir/filters.txt"
+
+Visualization.cameraSize: 0.2
+
+System.autoplay: 1
+
+# Set the below variables to valid paths to save outputs
+MapVisualizer.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/stir/map/"
+ImageVisualizer.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/stir/images/"
+Evaluation.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/stir/eval/"
+
+MapVisualizer.left_view: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [1.0, 0.0, 0.0, 0.0,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]
+
+MapVisualizer.right_view: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [1.0, 0.0, 0.0, -0.0041519,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]

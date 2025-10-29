@@ -21,9 +21,9 @@ Visualization.cameraSize: 0.1
 System.autoplay: 1
 
 # Set the below variables to valid paths to save outputs
-MapVisualizer.save_path: ""
-ImageVisualizer.save_path: ""
-Evaluation.save_path: ""
+MapVisualizer.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/hamlyn20/map/"
+ImageVisualizer.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/hamlyn20/images/"
+Evaluation.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/hamlyn20/eval/"
 
 MapVisualizer.left_view: !!opencv-matrix
   rows: 4

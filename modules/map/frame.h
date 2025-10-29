@@ -22,8 +22,8 @@
 
 #include <vector>
 
-#include "calibration/camera_model.h"
-#include "map/keyframe.h"
+#include "../calibration/camera_model.h"
+//#include "map/keyframe.h"
 #include "map/mappoint.h"
 #include "utilities/landmark_status.h"
 
@@ -32,17 +32,26 @@
 #include "absl/status/statusor.h"
 #include "sophus/se3.hpp"
 
+#include "../datasets/dataset.h"
+
 #include <opencv2/opencv.hpp>
 
 typedef long unsigned int ID;
 
 class KeyFrame;
 
-class Frame {
+namespace dataset {
+
+class Frame : public FrameBase {
 public:
+    using Ptr = std::shared_ptr<dataset::Frame>;
+
+    static Ptr Create(double timestamp, const cv::Mat& image);
     Frame();
 
     Frame(const Frame& other);
+
+    const cv::Mat& GetImage() const { return image_; }
 
     void SetFromKeyFrame(std::shared_ptr<KeyFrame> keyframe);
 
@@ -121,7 +130,12 @@ private:
     int id_ = 0;
 
     float median_deformation_magnitud_;
+
+    double timestamp_;
+    cv::Mat image_;
+
 };
 
+}
 
 #endif //NRSLAM_FRAME_H

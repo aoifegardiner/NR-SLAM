@@ -28,7 +28,7 @@
 #include "absl/log/log.h"
 #include "absl/log/check.h"
 
-
+using dataset::Frame;
 using namespace std;
 
 Tracking::Tracking(const Tracking::Options options, std::shared_ptr<Map> map,
@@ -95,12 +95,15 @@ void Tracking::TrackImage(const cv::Mat &im, const absl::flat_hash_map<std::stri
         PointReuse(im, cv::Mat(), lost_mappoint_ids);
 
         if (current_frame_->GetKeypointsWithStatus({TRACKED_WITH_3D}).size() < 10) {
+            cout<<"Not enough points to track."<<endl;
             exit(0);
         }
 
         // KeyFrame insertion.
         KeyFrameInsertion(im, masks);
 
+        poses_.push_back(current_frame_->CameraTransformationWorld());
+        cout<<"Num poses: "<<poses_.size()<<endl;        
         // Insert frame to the temporal buffer.
         map_->SetLastFrame(current_frame_);
 
@@ -109,6 +112,10 @@ void Tracking::TrackImage(const cv::Mat &im, const absl::flat_hash_map<std::stri
         image_visualizer_->DrawRegularizationGraph(*current_frame_, *(map_->GetRegularizationGraph()));
         image_visualizer_->DrawFeatures(current_frame_->Keypoints());
     }
+}
+
+std::vector<Sophus::SE3f> Tracking::GetCameraPoses() const {
+    return poses_;
 }
 
 Tracking::TrackingStatus Tracking::GetTrackingStatus() const {
@@ -137,12 +144,14 @@ void Tracking::MonocularMapInitialization(const cv::Mat& im_left,
                                        const cv::Mat& mask, const cv::Mat& im_clahe) {
     auto initialization_status = monocular_map_initializer_->ProcessNewImage(im_left, im_clahe, mask);
 
-    if(!initialization_status.ok()) {
-        LOG(INFO) << initialization_status.status().message();
+    poses_.push_back(initialization_status.camera_transform_world);
+    cout<<"Num poses: "<<poses_.size()<<endl;
+
+    if(!initialization_status.status.ok()) {
+        LOG(INFO) << initialization_status.status.message();
         return;
     }
-
-    auto initialization_results = *initialization_status;
+    auto initialization_results = initialization_status;
 
     vector<float> depths;
     for (int idx = 0; idx < initialization_results.current_keypoints.size(); idx++) {

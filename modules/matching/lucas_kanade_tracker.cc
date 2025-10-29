@@ -124,6 +124,10 @@ void LucasKanadeTracker::SetReferenceImage(const Mat &refIm, const vector<KeyPoi
                 for (; x < winSize_.width * cn; x++, dsrc += 2, dIptr += 2) {
                     int mx = (ipoint.x+x) * scaleFactor;
                     int my = (ipoint.y+y) * scaleFactor;
+                    
+                    if (!mask.empty()&(mx < 0 || my < 0 || mx >= mask.cols || my >= mask.rows)){
+                        continue;
+                    }
 
                     if(!mask.empty() && mask.at<uchar>(my,mx) == 0){
                         valid = false;

@@ -20,7 +20,7 @@
 #ifndef NRSLAM_KEYFRAME_H
 #define NRSLAM_KEYFRAME_H
 
-#include "map/frame.h"
+//#include "map/frame.h"
 #include "map/mappoint.h"
 #include "utilities/landmark_status.h"
 
@@ -32,13 +32,17 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "calibration/camera_model.h"
+
+namespace dataset {
 class Frame;
+}
 
 class KeyFrame {
 public:
     KeyFrame() = delete;
 
-    KeyFrame(Frame& frame);
+    KeyFrame(dataset::Frame& frame);
 
     std::vector<cv::KeyPoint>& Keypoints();
 

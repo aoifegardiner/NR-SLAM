@@ -33,7 +33,7 @@ void ImageVisualizer::SetCurrentImage(const cv::Mat& im_original, const cv::Mat&
     current_image_number_++;
 }
 
-void ImageVisualizer::DrawCurrentFrame(Frame &frame, const bool use_original_image) {
+void ImageVisualizer::DrawCurrentFrame(dataset::Frame &frame, const bool use_original_image) {
     cv::Mat image_to_display = (use_original_image) ? current_color_image_.clone() : current_processed_image_.clone();
 
     vector<cv::KeyPoint> keypoints = frame.GetKeypointsWithStatus({TRACKED_WITH_3D});
@@ -51,7 +51,7 @@ void ImageVisualizer::DrawCurrentFrame(Frame &frame, const bool use_original_ima
     }
 }
 
-void ImageVisualizer::DrawFrame(Frame &frame, std::string name) {
+void ImageVisualizer::DrawFrame(dataset::Frame &frame, std::string name) {
     cv::Mat image_to_display = current_processed_image_.clone();
 
     vector<cv::KeyPoint> keypoints = frame.GetKeypointsWithStatus({TRACKED_WITH_3D});
@@ -63,7 +63,7 @@ void ImageVisualizer::DrawFrame(Frame &frame, std::string name) {
     cv::imshow(name, image_to_display);
 }
 
-void ImageVisualizer::DrawRegularizationGraph(Frame &frame, RegularizationGraph &regularization_graph,
+void ImageVisualizer::DrawRegularizationGraph(dataset::Frame &frame, RegularizationGraph &regularization_graph,
                                               const bool use_original_image) {
     cv::Mat image_to_display = (use_original_image) ? current_color_image_.clone() : current_processed_image_.clone();
 

@@ -67,6 +67,9 @@ public:
 
     TrackingStatus GetTrackingStatus() const;
 
+    std::vector<Sophus::SE3f> GetCameraPoses() const;
+
+
 private:
     void ExtractFeatures(const cv::Mat& im, const cv::Mat& mask,
                          std::vector<cv::KeyPoint>& keypoints);
@@ -91,9 +94,9 @@ private:
 
     void CreateNewKeyFrame(const cv::Mat& im, const absl::flat_hash_map<std::string, cv::Mat>& masks);
 
-    void ExtractFeaturesInFrame(const cv::Mat& im, const cv::Mat& mask, Frame& frame);
+    void ExtractFeaturesInFrame(const cv::Mat& im, const cv::Mat& mask, dataset::Frame& frame);
 
-    void SetKLTReference(const cv::Mat& im, Frame& frame, const cv::Mat& mask);
+    void SetKLTReference(const cv::Mat& im, dataset::Frame& frame, const cv::Mat& mask);
 
     void PointReuse(const cv::Mat& im, const cv::Mat& mask,
                     absl::flat_hash_set<ID> lost_mappoint_ids);
@@ -110,7 +113,7 @@ private:
 
     LucasKanadeTracker klt_tracker_;
 
-    std::shared_ptr<Frame> current_frame_;
+    std::shared_ptr<dataset::Frame> current_frame_;
 
     //std::shared_ptr<StereoPatternMatching> stereo_matcher_;
     std::shared_ptr<StereoLucasKanade> stereo_matcher_;
@@ -128,6 +131,8 @@ private:
     Sophus::SE3f previous_camera_transform_world_;
 
     TimeProfiler* time_profiler_;
+
+    std::vector<Sophus::SE3f> poses_;
 };
 
 

@@ -28,8 +28,8 @@ using namespace mlpack::util;
 using namespace std;
 
 std::vector<int> Dbscan2D(std::vector<cv::Point2f>& points){
-    mlpack::DBSCAN<RangeSearch<>,OrderedPointSelection>
-            clustering(0.2,3);
+    mlpack::dbscan::DBSCAN<mlpack::range::RangeSearch<>, mlpack::dbscan::OrderedPointSelection> 
+            clustering(0.2, 3);
 
     arma::mat data(2, points.size());
     arma::vec norms(points.size());
@@ -59,7 +59,7 @@ std::vector<int> Dbscan2D(std::vector<cv::Point2f>& points){
 }
 
 std::vector<int> Dbscan3D(std::vector<Eigen::Vector3f>& points){
-    mlpack::DBSCAN<RangeSearch<>,OrderedPointSelection>
+    mlpack::dbscan::DBSCAN<mlpack::range::RangeSearch<>, mlpack::dbscan::OrderedPointSelection>
             clustering(2.5, 5); // (4.5, 5) for Hamlyn 20, (2.5, 5) for Hamlyn 21
 
     arma::mat data(3, points.size());
@@ -105,7 +105,7 @@ std::vector<int> Dbscan3D(std::vector<Eigen::Vector3f>& points){
 
 std::vector<int> DbscanND(std::vector<Eigen::VectorXf>& points){
     const float epsilon = 0.1 * points[0].size();
-    mlpack::DBSCAN<RangeSearch<>,OrderedPointSelection>
+    mlpack::dbscan::DBSCAN<mlpack::range::RangeSearch<>, mlpack::dbscan::OrderedPointSelection>
             clustering(epsilon, 10);
 
     arma::mat data(points[0].size(), points.size());

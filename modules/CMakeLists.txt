@@ -5,6 +5,7 @@ find_package(Boost REQUIRED COMPONENTS filesystem)
 find_package(MLPACK REQUIRED)
 find_package(Pangolin REQUIRED)
 
+
 set(LIBRARY_NAME NR-SLAM)
 
 # Current library
@@ -16,6 +17,9 @@ set(HEADER_FILES
         ${root}/calibration/pin_hole.h
         ${root}/datasets/endomapper.h
         ${root}/datasets/hamlyn.h
+        ${root}/datasets/scared.h
+        ${root}/datasets/stereomis.h
+        ${root}/datasets/stir.h
         ${root}/datasets/simulation.h
         ${root}/features/feature.h
         ${root}/features/shi_tomasi.h
@@ -67,6 +71,9 @@ set(SOURCE_FILES
         ${root}/calibration/pin_hole.cc
         ${root}/datasets/endomapper.cc
         ${root}/datasets/hamlyn.cc
+        ${root}/datasets/scared.cc
+        ${root}/datasets/stereomis.cc
+        ${root}/datasets/stir.cc
         ${root}/datasets/simulation.cc
         ${root}/features/shi_tomasi.cc
         ${root}/map/frame.cc
@@ -122,6 +129,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
         ${CMAKE_SOURCE_DIR}/third_party/g2o
         ${Pangolin_INCLUDE_DIRS}
         ${MLPACK_INCLUDE_DIRS}
+        ${PROJECT_SOURCE_DIR}/modules/datasets
+        ${CMAKE_SOURCE_DIR}/modules/calibration
         )
 
 #Add the library

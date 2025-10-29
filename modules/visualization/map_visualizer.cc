@@ -163,7 +163,7 @@ void MapVisualizer::FinishVisualization() {
 }
 
 void MapVisualizer::DrawLastFrame() {
-    Frame last_frame = map_->GetLastFrame();
+    dataset::Frame last_frame = map_->GetLastFrame();
     last_frame_id_drawn_ = last_frame.GetId();
 
     vector<Eigen::Vector3f> landmarks_with_3d, landmarks_recently_triangulated;
@@ -284,6 +284,8 @@ void MapVisualizer::DrawCamera(Sophus::SE3f camera_transformation_world, Eigen::
 
 void MapVisualizer::SetFinish() {
     should_finish = true;
+    map_->ExportMapPointsToPLY("/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/scared/MapPoints/map_points.ply");
+    map_->ExportTrajectoryToFile("/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/scared/trajectory.txt");
 }
 
 void MapVisualizer::DrawKeyFrames() {
@@ -334,7 +336,7 @@ void MapVisualizer::DrawConnectedPoints(std::vector<Eigen::Vector3f> &trajectory
 void MapVisualizer::DrawNonTrackedLandmarks() {
     auto mappoints = map_->GetMapPoints();
 
-    Frame last_frame = map_->GetLastFrame();
+    dataset::Frame last_frame = map_->GetLastFrame();
 
     vector<Eigen::Vector3f> non_tracked_3d, non_tracked_active_3d;
     vector<vector<Eigen::Vector3f>> non_tracked_active_3d_flow;

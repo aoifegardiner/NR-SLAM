@@ -1,0 +1,44 @@
+%YAML:1.0
+
+# Camera model
+Camera.model: "PinHole"
+
+# Camera calibration and distortion parameters
+Camera.fx: 1033.894287
+Camera.fy: 1033.714721
+Camera.cx: 604.578857
+Camera.cy: 514.976196
+
+Camera.radiansPerPixel: 0.002
+
+# For stereo evaluation
+Stereo.bf: 4298.58
+
+Masking.filterFile: "./data/stereomis/filters.txt"
+
+Visualization.cameraSize: 0.2
+
+System.autoplay: 1
+
+# Set the below variables to valid paths to save outputs
+MapVisualizer.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/stereomis/map/"
+ImageVisualizer.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/stereomis/images/"
+Evaluation.save_path: "/mnt/c/Users/Aoife/scared_env/NR-SLAM/output/stereomis/eval/"
+
+MapVisualizer.left_view: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [1.0, 0.0, 0.0, 0.0,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]
+
+MapVisualizer.right_view: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [0.999999991, 3.64895316e-05, -1.29972150e-04, -4.15988541,
+         -3.64927614e-05, 0.999999999, -2.48481197e-05, 0.01823110,
+         1.29971243e-04, 2.48528625e-05, 0.999999991, 0.02658929,
+         0.0, 0.0, 0.0, 1.0]

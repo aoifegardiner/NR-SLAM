@@ -62,7 +62,7 @@ public:
         float deformation_magnitud;
     };
 
-    void InsertSnapshotFromFrame(Frame& frame);
+    void InsertSnapshotFromFrame(dataset::Frame& frame);
 
     absl::btree_map<ID, Snapshot>& GetRawBuffer();
 

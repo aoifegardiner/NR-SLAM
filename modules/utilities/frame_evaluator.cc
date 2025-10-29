@@ -32,7 +32,7 @@ FrameEvaluator::FrameEvaluator(Options& options, std::shared_ptr<StereoMatcher> 
                                MapVisualizer* map_visualizer) :
         options_(options), stereo_matcher_(stereo_matcher), map_visualizer_(map_visualizer) {}
 
-void FrameEvaluator::EvaluateFrameReconstruction(Frame &frame, const cv::Mat &im_left,
+void FrameEvaluator::EvaluateFrameReconstruction(dataset::Frame &frame, const cv::Mat &im_left,
                                                  const cv::Mat &im_right) {
     auto keypoints = frame.GetKeypointsWithStatus({TRACKED_WITH_3D});
     auto landmark_positions = frame.GetLandmarkPositionsWithStatus({TRACKED_WITH_3D});
@@ -288,7 +288,7 @@ void FrameEvaluator::SaveResultsToFile() {
     results_file.close();
 }
 
-void FrameEvaluator::SaveGroundTruthToFrame(Frame &frame, const float scale_factor,
+void FrameEvaluator::SaveGroundTruthToFrame(dataset::Frame &frame, const float scale_factor,
                                             const std::vector<absl::StatusOr<Eigen::Vector3f>> &ground_truth,
                                             const std::vector<int> indices_in_frame) {
     std::vector<absl::StatusOr<Eigen::Vector3f>>& frame_ground_truth = frame.MutableGroundTruth();

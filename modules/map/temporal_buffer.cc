@@ -25,7 +25,7 @@ using namespace std;
 
 TemporalBuffer::TemporalBuffer(TemporalBuffer::Options &options) : options_(options) {}
 
-void TemporalBuffer::InsertSnapshotFromFrame(Frame &frame) {
+void TemporalBuffer::InsertSnapshotFromFrame(dataset::Frame& frame) {
     Snapshot snapshot;
 
     auto keypoints = frame.GetKeypointsWithStatus({TRACKED_WITH_3D, TRACKED});

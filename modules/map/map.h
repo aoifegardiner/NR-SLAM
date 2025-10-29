@@ -67,11 +67,11 @@ public:
 
     std::shared_ptr<KeyFrame> GetNextUnmappedKeyFrame();
 
-    Frame GetLastFrame();
+    dataset::Frame GetLastFrame();
 
-    std::shared_ptr<Frame> GetMutableLastFrame();
+    std::shared_ptr<dataset::Frame> GetMutableLastFrame();
 
-    void SetLastFrame(std::shared_ptr<Frame> frame);
+    void SetLastFrame(std::shared_ptr<dataset::Frame> frame);
 
     bool IsEmpty();
 
@@ -87,6 +87,10 @@ public:
 
     float GetMapScale();
 
+    void ExportMapPointsToPLY(const std::string& filename);
+
+    void ExportTrajectoryToFile(const std::string& filename);
+
 private:
 
     // Mappings of the KeyFrame/MapPoint ids and the KeyFrame/MapPoint itself.
@@ -100,9 +104,9 @@ private:
     std::shared_ptr<TemporalBuffer> temporal_buffer_;
 
     // Last frame for visualization
-    std::shared_ptr<Frame> last_frame_;
+    std::shared_ptr<dataset::Frame> last_frame_;
 
-    Frame frame_to_render_;
+    dataset::Frame frame_to_render_;
 
     // Regularization graph.
     std::shared_ptr<RegularizationGraph> regularization_graph_;

@@ -47,7 +47,7 @@
 
 using namespace std;
 
-void CameraPoseOptimization(Frame& frame, const Sophus::SE3f& previous_camera_transform_world) {
+void CameraPoseOptimization(dataset::Frame& frame, const Sophus::SE3f& previous_camera_transform_world) {
     // Create optimizer.
     g2o::SparseOptimizer optimizer;
     std::unique_ptr<g2o::BlockSolver_6_3::LinearSolverType> linearSolver =
@@ -145,7 +145,7 @@ void CameraPoseOptimization(Frame& frame, const Sophus::SE3f& previous_camera_tr
             camera_pose_vertex->estimate().to_homogeneous_matrix().cast<float>());
 }
 
-absl::flat_hash_set<ID> CameraPoseAndDeformationOptimization(Frame& current_frame,
+absl::flat_hash_set<ID> CameraPoseAndDeformationOptimization(dataset::Frame& current_frame,
                                                      std::shared_ptr<Map> map,
                                                      const Sophus::SE3f& previous_camera_transform_world,
                                                      const float scale) {

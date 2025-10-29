@@ -37,7 +37,7 @@ public:
     FrameEvaluator(Options& options, std::shared_ptr<StereoMatcher> stereo_matcher,
                    MapVisualizer* map_visualizer);
 
-    void EvaluateFrameReconstruction(Frame& frame, const cv::Mat& im_left, const cv::Mat& im_right);
+    void EvaluateFrameReconstruction(dataset::Frame& frame, const cv::Mat& im_left, const cv::Mat& im_right);
 
     void SaveResultsToFile();
 private:
@@ -58,7 +58,7 @@ private:
     std::tuple<float, float> ComputeRMSEWithScaleAlignment(const std::vector<float>& estimated_depths,
                                            const std::vector<float>& ground_truth_depths);
 
-    void SaveGroundTruthToFrame(Frame& frame, const float scale_factor,
+    void SaveGroundTruthToFrame(dataset::Frame& frame, const float scale_factor,
                                 const std::vector<absl::StatusOr<Eigen::Vector3f>>& ground_truth,
                                 const std::vector<int> indices_in_frame);
 

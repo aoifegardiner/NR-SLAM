@@ -72,6 +72,7 @@ int main(int argc, char **argv) {
 
         SLAM.TrackImageWithDepth((*image), (*depth_image));
     }
+    SLAM.SaveTraj();
 
     return 0;
 }

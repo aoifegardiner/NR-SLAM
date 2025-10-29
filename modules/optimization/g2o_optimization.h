@@ -24,9 +24,9 @@
 #include "map/map.h"
 #include "map/regularization_graph.h"
 
-void CameraPoseOptimization(Frame& frame, const Sophus::SE3f& previous_camera_transform_world);
+void CameraPoseOptimization(dataset::Frame& frame, const Sophus::SE3f& previous_camera_transform_world);
 
-absl::flat_hash_set<ID> CameraPoseAndDeformationOptimization(Frame& current_frame,
+absl::flat_hash_set<ID> CameraPoseAndDeformationOptimization(dataset::Frame& current_frame,
                                                      std::shared_ptr<Map> map,
                                                      const Sophus::SE3f& previous_camera_transform_world,
                                                      const float scale);

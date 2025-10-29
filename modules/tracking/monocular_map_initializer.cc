@@ -49,14 +49,16 @@ MonocularMapInitializer::MonocularMapInitializer(Options& options,
     internal_status_ = NO_DATA;
 }
 
-absl::StatusOr<MonocularMapInitializer::InitializationResults>
+MonocularMapInitializer::InitializationResults
 MonocularMapInitializer::ProcessNewImage(const cv::Mat& im, const cv::Mat& im_clahe,
-                                              const cv::Mat& mask) {
+                                                const cv::Mat& mask) {
     // Track features and update the feature tracks.
     DataAssociation(im, im_clahe, mask);
 
     if (internal_status_ == RECENTLY_RESET) {
-        return absl::InternalError("Just reset");
+        MonocularMapInitializer::InitializationResults partial_results;
+        partial_results.status = absl::InternalError("Just reset");
+        return partial_results;
     }
 
     // Perform optical flow clustering.
@@ -64,15 +66,19 @@ MonocularMapInitializer::ProcessNewImage(const cv::Mat& im, const cv::Mat& im_cl
 
     // Try to perform a rigid initialization.
     auto initialization_results_status = RigidInitialization();
+    auto status = initialization_results_status.status;
+    auto camera_transform_world = initialization_results_status.camera_transform_world;
+    auto landmarks_positions = initialization_results_status.landmarks_position;
 
-    if (!initialization_results_status.ok()) {
-        LOG(INFO) << initialization_results_status.status().message();
-        return absl::InternalError("Rigid Initialization failed");
-    }
+        if (!status.ok()) {
+            LOG(INFO) << status.message();
+            MonocularMapInitializer::InitializationResults partial_results;
+            partial_results.camera_transform_world = camera_transform_world;
+            partial_results.status = absl::InternalError("Rigid Initialization failed");
+            return partial_results;
+        }
 
-    auto [camera_transform_world, landmarks_positions] = *initialization_results_status;
-
-    // Perform a deformable Bundle Adjustment to refine the results.
+        // Perform a deformable Bundle Adjustment to refine the results.
     return InitializationRefinement(current_keypoints_, landmarks_positions, feature_labels, camera_transform_world);
 
 }
@@ -224,13 +230,13 @@ MonocularMapInitializer::RigidInitializationResults MonocularMapInitializer::Rig
     auto status = rigid_initializer_->Initialize(current_keypoints_, current_keypoint_statuses_,
                                                 n_tracks_in_image_, camera_transform_world,
                                                 landmarks_position);
-
+    RigidInitializationResults result = {status, camera_transform_world, landmarks_position};
+    
     if (!status.ok()) {
-        return absl::InternalError(status.message());
-    } else {
-        return make_tuple(camera_transform_world, landmarks_position);
+        result.landmarks_position.clear(); // Invalidate landmarks on failure
     }
-}
+    return result;
+}    
 
 MonocularMapInitializer::InitializationResults
 MonocularMapInitializer::InitializationRefinement(std::vector<cv::KeyPoint>& current_keypoints,

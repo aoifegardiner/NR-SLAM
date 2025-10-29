@@ -18,12 +18,14 @@
  */
 
 #include "keyframe.h"
+#include "map/frame.h"
+
 
 using namespace std;
 
 long unsigned int KeyFrame::nextId_ = 0;
 
-KeyFrame::KeyFrame(Frame &frame) {
+KeyFrame::KeyFrame(dataset::Frame& frame) {
     // Recover tracked landmarks with 3D.
     keypoints_ = frame.GetKeypointsWithStatus({TRACKED_WITH_3D});
     landmark_positions_ = frame.GetLandmarkPositionsWithStatus({TRACKED_WITH_3D});

@@ -14,11 +14,6 @@
 #
 #  Eigen3::Eigen - The header-only Eigen library
 #
-# This module reads hints about search locations from 
-# the following environment variables:
-#
-# EIGEN3_ROOT
-# EIGEN3_ROOT_DIR
 
 # Copyright (c) 2006, 2007 Montel Laurent, <montel@kde.org>
 # Copyright (c) 2008, 2009 Gael Guennebaud, <g.gael@free.fr>
@@ -40,6 +35,7 @@ if(NOT Eigen3_FIND_VERSION)
 endif()
 
 macro(_eigen3_check_version)
+  # Check the version of Eigen using a known header file
   file(READ "${EIGEN3_INCLUDE_DIR}/Eigen/src/Core/util/Macros.h" _eigen3_version_header)
 
   string(REGEX MATCH "define[ \t]+EIGEN_WORLD_VERSION[ \t]+([0-9]+)" _eigen3_world_version_match "${_eigen3_version_header}")
@@ -57,36 +53,30 @@ macro(_eigen3_check_version)
   endif()
 
   if(NOT EIGEN3_VERSION_OK)
-
     message(STATUS "Eigen3 version ${EIGEN3_VERSION} found in ${EIGEN3_INCLUDE_DIR}, "
                    "but at least version ${Eigen3_FIND_VERSION} is required")
   endif()
 endmacro()
 
 if (EIGEN3_INCLUDE_DIR)
-
-  # in cache already
+  # Eigen3 was found via cache or environment variable
   _eigen3_check_version()
   set(EIGEN3_FOUND ${EIGEN3_VERSION_OK})
   set(Eigen3_FOUND ${EIGEN3_VERSION_OK})
-
 else ()
-  
-  # search first if an Eigen3Config.cmake is available in the system,
-  # if successful this would set EIGEN3_INCLUDE_DIR and the rest of
-  # the script will work as usual
+  # Search for Eigen3 if it's not found in cache
   find_package(Eigen3 ${Eigen3_FIND_VERSION} NO_MODULE QUIET)
 
   if(NOT EIGEN3_INCLUDE_DIR)
-    find_path(EIGEN3_INCLUDE_DIR NAMES signature_of_eigen3_matrix_library
+    find_path(EIGEN3_INCLUDE_DIR NAMES Eigen/Core
         HINTS
-        ENV EIGEN3_ROOT 
+        ENV EIGEN3_ROOT
         ENV EIGEN3_ROOT_DIR
         PATHS
         ${CMAKE_INSTALL_PREFIX}/include
-        ${KDE4_INCLUDE_DIR}
+        /home/aoifegardiner/eigen-3.3.4-install/include/eigen3  # Add your custom path here
         PATH_SUFFIXES eigen3 eigen
-      )
+    )
   endif()
 
   if(EIGEN3_INCLUDE_DIR)
@@ -97,9 +87,9 @@ else ()
   find_package_handle_standard_args(Eigen3 DEFAULT_MSG EIGEN3_INCLUDE_DIR EIGEN3_VERSION_OK)
 
   mark_as_advanced(EIGEN3_INCLUDE_DIR)
-
 endif()
 
+# If Eigen is found, set up an IMPORTED target for it
 if(EIGEN3_FOUND AND NOT TARGET Eigen3::Eigen)
   add_library(Eigen3::Eigen INTERFACE IMPORTED)
   set_target_properties(Eigen3::Eigen PROPERTIES

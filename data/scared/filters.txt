@@ -1,0 +1,7 @@
+# Filters for SCARED dataset compatibility
+
+# Exclude overly bright regions (if necessary)
+BrightFilter 230
+
+# Crop unreliable image borders (conservatively)
+BorderFilter 10 10 10 10 0

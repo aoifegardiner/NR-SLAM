@@ -21,3 +21,15 @@ target_link_libraries(${PROGRAM_NAME} ${OpenCV_LIBS} absl::log absl::log_flags a
 set(PROGRAM_NAME simulation)
 add_executable(${PROGRAM_NAME} simulation.cc)
 target_link_libraries(${PROGRAM_NAME} ${OpenCV_LIBS} absl::log absl::log_flags absl::flags_parse absl::check absl::status NR-SLAM)
+
+set(PROGRAM_NAME scared)
+add_executable(${PROGRAM_NAME} scared.cc)
+target_link_libraries(${PROGRAM_NAME} ${OpenCV_LIBS} absl::log absl::log_flags absl::flags_parse absl::check absl::status NR-SLAM)
+
+set(PROGRAM_NAME stereomis)
+add_executable(${PROGRAM_NAME} stereomis.cc)
+target_link_libraries(${PROGRAM_NAME} ${OpenCV_LIBS} absl::log absl::log_flags absl::flags_parse absl::check absl::status NR-SLAM)
+
+set(PROGRAM_NAME stir)
+add_executable(${PROGRAM_NAME} stir.cc)
+target_link_libraries(${PROGRAM_NAME} ${OpenCV_LIBS} absl::log absl::log_flags absl::flags_parse absl::check absl::status NR-SLAM)

@@ -172,7 +172,7 @@ bool Hamlyn::SplitVideoIntoFrames(const std::string &path, const std::string &vi
     cv::Size newSize = cv::Size(leftImSize.width,leftImSize.height*1.79);
 
     // Use this for Hamlyn 01.
-    /* leftCal_ = (cv::Mat_<double>(3,3) << 381.914307, 0.0, 168.108963,
+    /*leftCal_ = (cv::Mat_<double>(3,3) << 381.914307, 0.0, 168.108963,
             0.0, 383.797882, 126.979446,
             0.0, 0.0, 1.0);
     leftDistorsion_ = (cv::Mat_<double>(1,4) << -0.333236, 0.925076, 0.003847, 0.000916);

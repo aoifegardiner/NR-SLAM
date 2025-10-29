@@ -1,0 +1,41 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/dquat2mat.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/dquat2mat.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/dquat2mat.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_pointxyz.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_pointxyz.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_pointxyz.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_lotsofxyz.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_lotsofxyz.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_lotsofxyz.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_offset.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_offset.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_offset.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_pointxyz.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_pointxyz.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_pointxyz.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_pointxyz_depth.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_pointxyz_depth.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_pointxyz_depth.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_pointxyz_disparity.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_pointxyz_disparity.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_pointxyz_disparity.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_prior.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_prior.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_prior.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_se3_xyzprior.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_xyzprior.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_se3_xyzprior.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/edge_xyz_prior.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_xyz_prior.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/edge_xyz_prior.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/isometry3d_gradients.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/isometry3d_gradients.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/isometry3d_gradients.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/isometry3d_mappings.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/isometry3d_mappings.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/isometry3d_mappings.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/parameter_camera.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/parameter_camera.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/parameter_camera.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/parameter_se3_offset.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/parameter_se3_offset.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/parameter_se3_offset.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/parameter_stereo_camera.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/parameter_stereo_camera.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/parameter_stereo_camera.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/types_slam3d.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/types_slam3d.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/types_slam3d.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/vertex_pointxyz.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/vertex_pointxyz.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/vertex_pointxyz.cpp.o.d"
+  "/mnt/c/Users/Aoife/scared_env/NR-SLAM/third_party/g2o/g2o/types/slam3d/vertex_se3.cpp" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/vertex_se3.cpp.o" "gcc" "third_party/g2o/g2o/types/slam3d/CMakeFiles/types_slam3d.dir/vertex_se3.cpp.o.d"
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

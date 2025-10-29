@@ -17,14 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "frame.h"
-
+#include "map/frame.h"
+#include "map/keyframe.h"
 #include "absl/log/log.h"
 #include "absl/log/check.h"
 
 using namespace std;
+using dataset::Frame;
 
-Frame::Frame() {}
+
+namespace dataset {
+    Frame::Frame() {}
+
 
 Frame::Frame(const Frame &other) {
     keypoints_ = other.keypoints_;
@@ -252,4 +256,13 @@ void Frame::SetDeformationMaginitud(const float deformation_magnitud) {
 
 float Frame::GetDeformationMagnitud() {
     return median_deformation_magnitud_;
+}
+
+Frame::Ptr Frame::Create(double timestamp, const cv::Mat& image) {
+    auto frame = std::make_shared<dataset::Frame>();
+    frame->timestamp_ = timestamp;
+    frame->image_ = image.clone();  // if image is stored
+    return frame;
+}
+
 }

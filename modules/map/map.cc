@@ -18,10 +18,12 @@
  */
 
 #include "map.h"
+#include "frame.h"
 
 #include "absl/log/log.h"
 
 using namespace std;
+using dataset::Frame;
 
 Map::Map(Map::Options &options) : options_(options) {
     RegularizationGraph::Options regularization_graph_options;
@@ -42,6 +44,9 @@ void Map::InsertKeyFrame(std::shared_ptr<KeyFrame> keyframe) {
     unmapped_keyframes_.push_back(keyframe->GetId());
 
     keyframes_mutex_.Unlock();
+
+    std::string filename = "keyframe_" + std::to_string(keyframe->GetId()) + ".ply";
+    ExportMapPointsToPLY(filename);
 }
 
 void Map::InsertMapPoint(std::shared_ptr<MapPoint> mappoint) {
@@ -103,7 +108,7 @@ std::shared_ptr<KeyFrame> Map::GetKeyFrame(ID id) {
 
 
 
-void Map::SetLastFrame(std::shared_ptr<Frame> frame) {
+void Map::SetLastFrame(std::shared_ptr<dataset::Frame> frame){
     last_frame_mutex_.Lock();
 
     last_frame_ = frame;
@@ -127,7 +132,7 @@ Frame Map::GetLastFrame() {
     return latest_frame;
 }
 
-std::shared_ptr<Frame> Map::GetMutableLastFrame() {
+std::shared_ptr<dataset::Frame> Map::GetMutableLastFrame() {
     return last_frame_;
 }
 
@@ -186,4 +191,69 @@ void Map::SetMapScale(const float scale) {
 
 float Map::GetMapScale() {
     return map_scale_;
+}
+
+#include <fstream>
+
+void Map::ExportMapPointsToPLY(const std::string& filename) {
+    std::ofstream ply_file(filename);
+    if (!ply_file.is_open()) {
+        std::cerr << "Could not open " << filename << " for writing." << std::endl;
+        return;
+    }
+
+    const auto& mappoints = GetMapPoints();
+
+    // Count valid points
+    size_t point_count = 0;
+    for (const auto& [id, mp] : mappoints) {
+        if (mp) point_count++;
+    }
+
+    // Write .ply header
+    ply_file << "ply\n";
+    ply_file << "format ascii 1.0\n";
+    ply_file << "element vertex " << point_count << "\n";
+    ply_file << "property float x\n";
+    ply_file << "property float y\n";
+    ply_file << "property float z\n";
+    ply_file << "end_header\n";
+
+    // Write 3D points
+    for (const auto& [id, mp] : mappoints) {
+        if (mp) {
+            Eigen::Vector3f pos = mp->GetLastWorldPosition();
+            ply_file << pos.x() << " " << pos.y() << " " << pos.z() << "\n";
+        }
+    }
+
+    ply_file.close();
+    std::cout << "Exported " << point_count << " map points to " << filename << std::endl;
+}
+
+#include <fstream>
+#include <iomanip>
+
+void Map::ExportTrajectoryToFile(const std::string& filename) {
+    std::ofstream out(filename);
+    if (!out.is_open()) {
+        std::cerr << "Could not open " << filename << " for writing trajectory." << std::endl;
+        return;
+    }
+
+    auto keyframes = GetKeyFrames();
+
+    out << std::fixed << std::setprecision(6);
+    for (const auto& [id, kf] : keyframes) {
+        const Sophus::SE3f& Tcw = kf->CameraTransformationWorld();
+        Eigen::Quaternionf q(Tcw.unit_quaternion());
+        Eigen::Vector3f t = Tcw.translation();
+
+        out << id << " "
+            << t.x() << " " << t.y() << " " << t.z() << " "
+            << q.x() << " " << q.y() << " " << q.z() << " " << q.w() << "\n";
+    }
+
+    out.close();
+    std::cout << "Camera trajectory written to: " << filename << std::endl;
 }

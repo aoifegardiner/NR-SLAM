@@ -97,6 +97,8 @@ System::System(const string settings_file_path) {
     // Initialize frame evaluator.
     FrameEvaluator::Options frame_evaluator_options;
     frame_evaluator_options.results_file_path = settings_->GetEvaluationPath();
+    cout << "Evaluation path: " << settings_->GetEvaluationPath() << endl;
+    
     frame_evaluator_options.precomputed_depth_ = true;
     frame_evaluator_ = make_unique<FrameEvaluator>(frame_evaluator_options, stereo_pattern_matcher_,
                                                    map_visualizer_.get());
@@ -109,6 +111,57 @@ System::~System() {
     // Wait until is done
     map_visualizer_thread_->join();
 }
+
+vector<Eigen::Vector3f> System::GetTraj() {
+    auto latest_frames = map_->GetTemporalBuffer()->GetLatestCameraPoses();
+
+    vector<Eigen::Vector3f> trajectory;
+    for (auto& pose : latest_frames) {
+        trajectory.push_back(pose.inverse().translation());
+    }
+    return trajectory;
+}
+
+
+void System::SaveTraj() {
+    // Get the latest camera poses directly (not just translation)
+    // auto latest_frames = map_->GetTemporalBuffer()->GetLatestCameraPoses();
+    auto poses = tracker_->GetCameraPoses();
+
+    // Open file for writing
+    std::ofstream traj_file("trajectory.tum", std::ios::out);
+    if (!traj_file.is_open()) {
+        std::cerr << "Failed to open trajectory file!" << std::endl;
+        return;
+    }
+
+    // Set precision for floating-point output
+    traj_file << std::fixed << std::setprecision(6);
+
+    // Iterate over poses and write in TUM format
+    double time_step = 0.033; // Assume 30 FPS; adjust as needed
+    int frame_idx = 0;
+    for (const auto& pose : poses) {
+        // Assuming pose is Sophus::SE3f or Sophus::SE3d
+        Eigen::Vector3f t = pose.inverse().translation(); // Translation (x, y, z)
+        Eigen::Quaternionf q(pose.inverse().unit_quaternion()); // Quaternion (qx, qy, qz, qw)
+
+        // Synthetic timestamp (adjust if real timestamps are available)
+        double timestamp = frame_idx * time_step;
+
+        // Write to file: timestamp tx ty tz qx qy qz qw
+        traj_file << timestamp << " "
+                  << t.x() << " " << t.y() << " " << t.z() << " "
+                  << q.x() << " " << q.y() << " " << q.z() << " " << q.w() << "\n";
+
+        frame_idx++;
+    }
+
+    // Close the file
+    traj_file.close();
+    std::cout << "Trajectory saved to trajectory.tum" << std::endl;
+}
+
 
 void System::TrackImage(const cv::Mat &im) {
     // Preprocess image.
@@ -150,7 +203,7 @@ void System::TrackImageWithStereo(const cv::Mat &im_left, const cv::Mat &im_righ
     mapper_->DoMapping();
 
     // Evaluate reconstruction.
-    if (false && tracker_->GetTrackingStatus() == Tracking::TRACKING) {
+    if (tracker_->GetTrackingStatus() == Tracking::TRACKING) {
         frame_evaluator_->EvaluateFrameReconstruction(*(map_->GetMutableLastFrame()), im_gray_left, im_gray_right);
         frame_evaluator_->SaveResultsToFile();
     }
@@ -199,4 +252,3 @@ cv::Mat System::ImageProcessing(const cv::Mat &im, cv::Mat& im_gray) {
 
     return processed_image;
 }
-

@@ -46,6 +46,7 @@ public:
     };
 
     struct InitializationResults {
+        absl::Status status;
         Sophus::SE3f camera_transform_world;
 
         std::vector<cv::KeyPoint> reference_keypoints;
@@ -61,8 +62,8 @@ public:
                             std::shared_ptr<CameraModel> calibration,
                             std::shared_ptr<ImageVisualizer> image_visualizer);
 
-    absl::StatusOr<InitializationResults> ProcessNewImage(const cv::Mat& im, const cv::Mat& im_clahe,
-                         const cv::Mat& mask);
+    InitializationResults ProcessNewImage(const cv::Mat& im, const cv::Mat& im_clahe,
+        const cv::Mat& mask);
 
 private:
     void DataAssociation(const cv::Mat& im, const cv::Mat& im_clahe,
@@ -81,9 +82,11 @@ private:
     void ResetInitialization(const cv::Mat& im, const cv::Mat& im_clahe,
                              const cv::Mat& mask);
 
-    typedef absl::StatusOr<
-            std::tuple<Sophus::SE3f, std::vector<absl::StatusOr<Eigen::Vector3f>>>>
-            RigidInitializationResults;
+    struct RigidInitializationResults {
+    absl::Status status;
+    Sophus::SE3f camera_transform_world;
+    std::vector<absl::StatusOr<Eigen::Vector3f>> landmarks_position; // Empty if status not OK
+    };
 
     RigidInitializationResults RigidInitialization();
 
